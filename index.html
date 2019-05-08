@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>幼儿算术</title>
+    <style>
+		*{
+			padding:0;
+			margin:0;
+			box-sizing: border-box;
+		}
+		html,body{
+			overflow:hidden;
+		}
+        #canvasWrap {
+            position:relative;
+            margin:0 auto;
+            width:100%;
+            height:100%;
+            border:1px solid #a7bdcc;
+            background-color:#fff
+        }
+		.btn-group{
+			position:absolute;
+			right:50px;
+			bottom:50px;
+			z-index:2;
+		}
+		canvas{
+			vertical-align:top; 
+			display:block;
+		}
+    </style>
+
+</head>
+<body onload="init()">
+
+         <div id="canvasWrap">
+             <canvas id="canvas"></canvas>
+         </div>
+		 <div class="btn-group">
+         <button id="clear">重写</button>
+         <button id="ok">确定</button>
+		 </div>
+<script type="text/javascript" src="./handwritingapi.js"></script>
+
+<script type="text/javascript">
+    function callbackfunc(ret){		
+		var temp = "";
+		for(var i=0;i<ret.cand.length;i++){
+			if("0123456789".indexOf(ret.cand[i])>-1){
+				temp = ret.cand[i];
+				break;
+			}
+		}		
+        answer=temp;
+    }
+	var question = "";
+	var answer = "";	
+	var canvas = document.querySelector("#canvas");
+	var context = canvas.getContext("2d");
+    function init() {
+		canvas.width = document.documentElement.clientWidth;
+		canvas.height = document.documentElement.clientHeight;
+        QQShuru.HWPanel({
+            canvasId:"#canvas",
+            lineColor:"blue",
+            //backBtnId:"#back",
+            //clearBtnId:"#clear",
+            callback:callbackfunc
+        });
+		setQuestion();
+    }
+	function getQuestion(){
+		var a = 10;
+		var b = 10;
+		var o = "+";
+		var r = eval(a+o+b);
+		while(r >= 10 || r < 0){
+			a = Math.floor(Math.random()*10); 
+			b = Math.floor(Math.random()*10); 	
+			o = Math.random()>=0.5?"+":"-";
+			r = eval(a+o+b);
+		}
+		return a+o+b;
+	}
+	QQShuru.Util.Event.addEvent(document.querySelector("#ok"), "click", function(){
+		if(eval(question) == answer){
+			context.fillStyle = "rgba(255, 0, 0, 0.5)";
+			context.font = "bold 320px '字体','字体','微软雅黑','宋体'"; //设置字体
+			context.fillText("√" ,180 ,400); //设置文本内容
+			setTimeout(function(){
+				setQuestion();
+			},2000);
+		}else{
+			context.fillStyle =  "rgba(255, 0, 0, 0.5)";
+			context.font = "bold 320px '字体','字体','微软雅黑','宋体'"; //设置字体
+			context.fillText("×" ,180 ,400); //设置文本内容
+		}		
+	});
+	 function setQuestion(){
+		QQShuru.clear();
+		question = getQuestion();
+		context.clearRect(0, 0, 600, 600)
+		context.fillStyle = "#000";
+		context.font = "bold 120px '字体','字体','微软雅黑','宋体'"; //设置字体
+		context.fillText(question+"=" ,80 ,320); //设置文本内容
+	}	
+	QQShuru.Util.Event.addEvent(document.querySelector("#clear"), "click", function(){		
+		QQShuru.clear();
+		context.clearRect(0, 0, 600, 600)
+		context.fillStyle = "#000";
+		context.font = "bold 120px '字体','字体','微软雅黑','宋体'"; //设置字体
+		context.fillText(question+"=" ,80 ,320); //设置文本内容
+	});
+</script>
+
+
+</body>
+</html>
