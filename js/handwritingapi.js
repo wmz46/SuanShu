@@ -275,6 +275,9 @@ QQShuru.HWPanel = function (obj) {
         var X = W + "?" + aa;
         QQShuru.Util.Ajax.get(X, ab)
     };
+	m(i, "touchstart", l);
+    m(i, "touchmove", A);
+    m(i, "touchend", n);
     m(i, "mousedown", l);
     m(i, "mousemove", A);
     m(i, "mouseup", n);
