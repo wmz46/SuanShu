@@ -1,50 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>幼儿算术</title>
-    <style>
-		*{
-			padding:0;
-			margin:0;
-			box-sizing: border-box;
-		}
-		html,body{
-			overflow:hidden;
-		}
-        #canvasWrap {
-            position:relative;
-            margin:0 auto;
-            width:100%;
-            height:100%;
-            border:1px solid #a7bdcc;
-            background-color:#fff
-        }
-		.btn-group{
-			position:absolute;
-			right:50px;
-			bottom:50px;
-			z-index:2;
-		}
-		canvas{
-			vertical-align:top; 
-			display:block;
-		}
-    </style>
-
+    <title>幼儿算术</title>	
+	<link href="./css/base.css" rel="stylesheet">
 </head>
 <body onload="init()">
 
          <div id="canvasWrap">
              <canvas id="canvas"></canvas>
          </div>
-		 <div class="btn-group">
-         <button id="clear">重写</button>
-         <button id="ok">确定</button>
+		 <div class="btn-group" >
+		   <a class="large orange  button" id="clear">重写</a>
+			<a class="large green  button" id="ok">确定</a>
 		 </div>
-<script type="text/javascript" src="./handwritingapi.js"></script>
-
+<script type="text/javascript" src="./js/handwritingapi.js"></script>
 <script type="text/javascript">
     function callbackfunc(ret){		
 		var temp = "";
@@ -102,14 +72,14 @@
 	 function setQuestion(){
 		QQShuru.clear();
 		question = getQuestion();
-		context.clearRect(0, 0, 600, 600)
+		context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight)
 		context.fillStyle = "#000";
 		context.font = "bold 120px '字体','字体','微软雅黑','宋体'"; //设置字体
 		context.fillText(question+"=" ,80 ,320); //设置文本内容
 	}	
 	QQShuru.Util.Event.addEvent(document.querySelector("#clear"), "click", function(){		
 		QQShuru.clear();
-		context.clearRect(0, 0, 600, 600)
+		context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight)
 		context.fillStyle = "#000";
 		context.font = "bold 120px '字体','字体','微软雅黑','宋体'"; //设置字体
 		context.fillText(question+"=" ,80 ,320); //设置文本内容
