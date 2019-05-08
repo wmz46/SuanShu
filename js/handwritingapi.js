@@ -270,7 +270,7 @@ QQShuru.HWPanel = function (obj) {
     var s = function (Y) {
         var Z = p(T, Y);
         var ab = "QQShuru.HWPanel.ajax_callback";
-        var W = "http://handwriting.shuru.qq.com/cloud/cgi-bin/cloud_hw_pub.wsgi";
+        var W = "https://handwriting.shuru.qq.com/cloud/cgi-bin/cloud_hw_pub.wsgi";
         var aa = "track_str=" + Z + "&cmd=0";
         var X = W + "?" + aa;
         QQShuru.Util.Ajax.get(X, ab)
