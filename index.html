@@ -7,6 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>幼儿算术</title>
     <link href="./css/base.css?v=0508" rel="stylesheet" />
+    <link href="./css/weui.css" rel="stylesheet" />
 </head>
 <body onload="init()">
     <div class='scroll'>
@@ -14,8 +15,8 @@
             <canvas id="canvas" disable-scroll="false"></canvas>
         </div>
         <div class="btn-group">
-            <a class="large orange  button" id="clear">重写</a>
-            <a class="large green  button" id="ok">确定</a>
+            <a class="weui-btn weui-btn_mini weui-btn_default" id="clear">重写</a>
+            <a class="weui-btn weui-btn_mini weui-btn_primary" id="ok">确定</a>
         </div>
     </div>
     <script type="text/javascript" src="./js/handwritingapi.js?v=050901"></script>
@@ -93,6 +94,7 @@
         QQShuru.Util.Event.addEvent(document.querySelector("#clear"), clickTag, function () {
             resetQuestion();
         });
+        //解决ios12滑动网页问题
         QQShuru.Util.Event.addEvent(document.querySelector("#canvas"), "touchmove", function (e) {
             e.preventDefault();
         },false);
