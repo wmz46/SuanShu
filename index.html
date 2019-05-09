@@ -20,7 +20,7 @@
     <script type="text/javascript" src="./js/handwritingapi.js?v=0509"></script>
     <script type="text/javascript">
         function callbackfunc(ret) {
-            document.getElementById("result").innerHtml = JSON.stringify(ret);
+            document.getElementById("result").innerHTML = JSON.stringify(ret);
             var temp = "";
             for (var i = 0; i < ret.cand.length; i++) {
                 if ("0123456789".indexOf(ret.cand[i]) > -1) {
