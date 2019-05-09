@@ -1,125 +1,127 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>幼儿算术</title>	
-	<link href="./css/base.css?v=0508" rel="stylesheet">
+    <title>幼儿算术</title>
+    <link href="./css/base.css?v=0508" rel="stylesheet">
 </head>
 <body onload="init()">
- <div class='scroll'>
-         <div id="canvasWrap">
-             <canvas id="canvas"></canvas>
-         </div>
-		 <div class="btn-group" >
-		   <a class="large orange  button" id="clear">重写</a>
-			<a class="large green  button" id="ok">确定</a>
-		 </div>
-		 </div>
-<script type="text/javascript" src="./js/handwritingapi.js?v=0509"></script>
-<script type="text/javascript">
-    function callbackfunc(ret){		
-		var temp = "";
-		for(var i=0;i<ret.cand.length;i++){
-			if("0123456789".indexOf(ret.cand[i])>-1){
-				temp = ret.cand[i];
-				break;
-			}
-		}		
-        answer=temp;
-    }
-	var question = "";
-	var answer = "";	
-	var canvas = document.querySelector("#canvas");
-	var context = canvas.getContext("2d");
-    function init() {
-		canvas.width = document.documentElement.clientWidth;
-		canvas.height = document.documentElement.clientHeight;
-        QQShuru.HWPanel({
-            canvasId:"#canvas",
-            lineColor:"blue",
-            //backBtnId:"#back",
-            //clearBtnId:"#clear",
-            callback:callbackfunc
+    <div class='scroll'>
+        <div id="canvasWrap">
+            <canvas id="canvas"></canvas>
+        </div>
+        <div class="btn-group">
+            <div id="result"></div>
+            <a class="large orange  button" id="clear">重写</a>
+            <a class="large green  button" id="ok">确定</a>
+        </div>
+    </div>
+    <script type="text/javascript" src="./js/handwritingapi.js?v=0509"></script>
+    <script type="text/javascript">
+        function callbackfunc(ret) {
+            document.getElementById("result").innerHtml = JSON.stringify(ret);
+            var temp = "";
+            for (var i = 0; i < ret.cand.length; i++) {
+                if ("0123456789".indexOf(ret.cand[i]) > -1) {
+                    temp = ret.cand[i];
+                    break;
+                }
+            }
+            answer = temp;
+        }
+        var question = "";
+        var answer = "";
+        var canvas = document.querySelector("#canvas");
+        var context = canvas.getContext("2d");
+        function init() {
+            canvas.width = document.documentElement.clientWidth;
+            canvas.height = document.documentElement.clientHeight;
+            QQShuru.HWPanel({
+                canvasId: "#canvas",
+                lineColor: "blue",
+                //backBtnId:"#back",
+                //clearBtnId:"#clear",
+                callback: callbackfunc
+            });
+            setQuestion();
+        }
+        function getQuestion() {
+            var a = 10;
+            var b = 10;
+            var o = "+";
+            var r = eval(a + o + b);
+            while (r >= 10 || r < 0) {
+                a = Math.floor(Math.random() * 10);
+                b = Math.floor(Math.random() * 10);
+                o = Math.random() >= 0.5 ? "+" : "-";
+                r = eval(a + o + b);
+            }
+            return a + o + b;
+        }
+        QQShuru.Util.Event.addEvent(document.querySelector("#ok"), "click", function () {
+            if (eval(question) === parseInt(answer, 10)) {
+                context.fillStyle = "rgba(255, 0, 0, 0.5)";
+                context.font = "bold 320px '字体','字体','微软雅黑','宋体'"; //设置字体
+                context.fillText("√", 180, 400); //设置文本内容
+                setTimeout(function () {
+                    setQuestion();
+                }, 2000);
+            } else {
+                context.fillStyle = "rgba(255, 0, 0, 0.5)";
+                context.font = "bold 320px '字体','字体','微软雅黑','宋体'"; //设置字体
+                context.fillText("×", 180, 400); //设置文本内容
+            }
         });
-		setQuestion();
-    }
-	function getQuestion(){
-		var a = 10;
-		var b = 10;
-		var o = "+";
-		var r = eval(a+o+b);
-		while(r >= 10 || r < 0){
-			a = Math.floor(Math.random()*10); 
-			b = Math.floor(Math.random()*10); 	
-			o = Math.random()>=0.5?"+":"-";
-			r = eval(a+o+b);
-		}
-		return a+o+b;
-	}
-	QQShuru.Util.Event.addEvent(document.querySelector("#ok"), "click", function(){
-		if(eval(question) === parseInt(answer,10)){
-			context.fillStyle = "rgba(255, 0, 0, 0.5)";
-			context.font = "bold 320px '字体','字体','微软雅黑','宋体'"; //设置字体
-			context.fillText("√" ,180 ,400); //设置文本内容
-			setTimeout(function(){
-				setQuestion();
-			},2000);
-		}else{
-			context.fillStyle =  "rgba(255, 0, 0, 0.5)";
-			context.font = "bold 320px '字体','字体','微软雅黑','宋体'"; //设置字体
-			context.fillText("×" ,180 ,400); //设置文本内容
-		}		
-	});
-	 function setQuestion(){
-		QQShuru.clear();
-		question = getQuestion();
-		context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight)
-		context.fillStyle = "#000";
-		context.font = "bold 120px '字体','字体','微软雅黑','宋体'"; //设置字体
-		context.fillText(question+"=" ,80 ,320); //设置文本内容
-	}	
-	QQShuru.Util.Event.addEvent(document.querySelector("#clear"), "click", function(){		
-		QQShuru.clear();
-		context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight)
-		context.fillStyle = "#000";
-		context.font = "bold 120px '字体','字体','微软雅黑','宋体'"; //设置字体
-		context.fillText(question+"=" ,80 ,320); //设置文本内容
-	});
-	//解决qq微信浏览器下拉问题
-	 //禁止下拉
-    var overscroll = function(el) {
-  el.addEventListener('touchstart', function() {
-    var top = el.scrollTop
-      , totalScroll = el.scrollHeight
-      , currentScroll = top + el.offsetHeight
-    //If we're at the top or the bottom of the containers
-    //scroll, push up or down one pixel.
-    //
-    //this prevents the scroll from "passing through" to
-    //the body.
-    if(top === 0) {
-      el.scrollTop = 1
-    } else if(currentScroll === totalScroll) {
-      el.scrollTop = top - 1
-    }
-  })
-  el.addEventListener('touchmove', function(evt) {
-    //if the content is actually scrollable, i.e. the content is long enough
-    //that scrolling can occur
-    if(el.offsetHeight < el.scrollHeight)
-      evt._isScroller = true
-  })
-}
-overscroll(document.querySelector('.scroll'));
-document.body.addEventListener('touchmove', function(evt) {
-  //In this case, the default behavior is scrolling the body, which
-  //would result in an overflow.  Since we don't want that, we preventDefault.
-  if(!evt._isScroller) {
-    evt.preventDefault()
-  }
-})
-</script>
+        function setQuestion() {
+            QQShuru.clear();
+            question = getQuestion();
+            context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight)
+            context.fillStyle = "#000";
+            context.font = "bold 120px '字体','字体','微软雅黑','宋体'"; //设置字体
+            context.fillText(question + "=", 80, 320); //设置文本内容
+        }
+        QQShuru.Util.Event.addEvent(document.querySelector("#clear"), "click", function () {
+            QQShuru.clear();
+            context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight)
+            context.fillStyle = "#000";
+            context.font = "bold 120px '字体','字体','微软雅黑','宋体'"; //设置字体
+            context.fillText(question + "=", 80, 320); //设置文本内容
+        });
+        //解决qq微信浏览器下拉问题
+        //禁止下拉
+        var overscroll = function (el) {
+            el.addEventListener('touchstart', function () {
+                var top = el.scrollTop
+                    , totalScroll = el.scrollHeight
+                    , currentScroll = top + el.offsetHeight
+                //If we're at the top or the bottom of the containers
+                //scroll, push up or down one pixel.
+                //
+                //this prevents the scroll from "passing through" to
+                //the body.
+                if (top === 0) {
+                    el.scrollTop = 1
+                } else if (currentScroll === totalScroll) {
+                    el.scrollTop = top - 1
+                }
+            })
+            el.addEventListener('touchmove', function (evt) {
+                //if the content is actually scrollable, i.e. the content is long enough
+                //that scrolling can occur
+                if (el.offsetHeight < el.scrollHeight)
+                    evt._isScroller = true
+            })
+        }
+        overscroll(document.querySelector('.scroll'));
+        document.body.addEventListener('touchmove', function (evt) {
+            //In this case, the default behavior is scrolling the body, which
+            //would result in an overflow.  Since we don't want that, we preventDefault.
+            if (!evt._isScroller) {
+                evt.preventDefault()
+            }
+        })
+    </script>
 
 
 </body>
