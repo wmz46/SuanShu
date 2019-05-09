@@ -52,7 +52,7 @@ QQShuru.Util.Event.getPoint = function (a) {
 		if(a.layerX || a.layerY){
 			return [a.layerX, a.layerY]
 		}else{//兼容手机
-			return [a.touches[0].clientX, a.touches[0].clientY]
+			return [parseInt(a.touches[0].clientX,10), parseInt(a.touches[0].clientY,10)]
 		}
         
     }
