@@ -6,7 +6,27 @@
     <meta http-equiv="Cache-Control" content="no-siteapp" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>幼儿算术</title>
-    <link href="./css/base.css?v=0508" rel="stylesheet" />
+    <style>
+        html, body {
+            overflow: hidden;
+        }
+
+        #canvasWrap {
+            position: relative;
+            margin: 0 auto;
+            width: 100%;
+            height: 100%;
+            border: 1px solid #a7bdcc;
+            background-color: #fff
+        }
+
+        .btn-group {
+            position: absolute;
+            right: 10px;
+            bottom: 50px;
+            z-index: 2;
+        }
+    </style>
     <link href="./css/weui.css" rel="stylesheet" />
 </head>
 <body onload="init()">
@@ -15,8 +35,8 @@
             <canvas id="canvas" disable-scroll="false"></canvas>
         </div>
         <div class="btn-group">
-            <a class="weui-btn weui-btn_mini weui-btn_default" id="clear">重写</a>
-            <a class="weui-btn weui-btn_mini weui-btn_primary" id="ok">确定</a>
+            <a class="weui-btn weui-btn_inline weui-btn_default" id="clear">重写</a>
+            <a class="weui-btn weui-btn_inline weui-btn_primary" id="ok">确定</a>
         </div>
     </div>
     <script type="text/javascript" src="./js/handwritingapi.js?v=050901"></script>
@@ -97,7 +117,7 @@
         //解决ios12滑动网页问题
         QQShuru.Util.Event.addEvent(document.querySelector("#canvas"), "touchmove", function (e) {
             e.preventDefault();
-        },false);
+        }, false);
         //解决qq微信浏览器下拉问题
         //禁止下拉
         var overscroll = function (el) {
