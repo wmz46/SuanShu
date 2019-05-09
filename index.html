@@ -85,6 +85,12 @@
 		context.font = "bold 120px '字体','字体','微软雅黑','宋体'"; //设置字体
 		context.fillText(question+"=" ,80 ,320); //设置文本内容
 	});
+	//解决qq微信浏览器下拉问题
+	document.body.addEventListener('touchmove', function(evt) {  
+	  if(!evt._isScroller) {
+	    evt.preventDefault();
+	  }
+	});
 </script>
 
 
