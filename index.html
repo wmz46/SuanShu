@@ -25,7 +25,7 @@
             right: 10px;
             bottom: 50px;
             z-index: 2;
-        }
+        }     
     </style>
     <link href="./css/weui.css" rel="stylesheet" />
 </head>
@@ -86,11 +86,12 @@
         if ((typeof (window.ontouchstart) == "undefined")) {
             clickTag = "click";
         }
+        var y_position = 150;
         QQShuru.Util.Event.addEvent(document.querySelector("#ok"), clickTag, function () {
             if (eval(question) === parseInt(answer, 10)) {
                 context.fillStyle = "rgba(0, 255, 0, 0.5)";
                 context.font = "bold 320px 'Helvetica Neue',Helvetica,Arial,'Hiragino Sans GB','Hiragino Sans GB W3','Microsoft YaHei UI','Microsoft YaHei','WenQuanYi Micro Hei'"; //设置字体
-                context.fillText("√", 180, 400); //设置文本内容
+                context.fillText("√", 180, y_position+150); //设置文本内容
                 setTimeout(function () {
                     question = getQuestion();
                     resetQuestion();
@@ -98,7 +99,7 @@
             } else {
                 context.fillStyle = "rgba(255, 0, 0, 0.5)";
                 context.font = "bold 320px 'Helvetica Neue',Helvetica,Arial,'Hiragino Sans GB','Hiragino Sans GB W3','Microsoft YaHei UI','Microsoft YaHei','WenQuanYi Micro Hei'"; //设置字体
-                context.fillText("×", 180, 400); //设置文本内容
+                context.fillText("×", 180, y_position+150); //设置文本内容
                 setTimeout(function () {
                     resetQuestion();
                 }, 2000);
@@ -109,7 +110,7 @@
             context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight)
             context.fillStyle = "#000";
             context.font = "bold 120px 'Helvetica Neue',Helvetica,Arial,'Hiragino Sans GB','Hiragino Sans GB W3','Microsoft YaHei UI','Microsoft YaHei','WenQuanYi Micro Hei'"; //设置字体
-            context.fillText(question + "=", 80, 320); //设置文本内容
+            context.fillText(question + "=", 80, y_position); //设置文本内容
         }
         QQShuru.Util.Event.addEvent(document.querySelector("#clear"), clickTag, function () {
             resetQuestion();
