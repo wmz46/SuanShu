@@ -49,7 +49,12 @@ QQShuru.Util.Event.getPoint = function (a) {
     if (QQShuru.Util.Browser.isIE) {
         return [a.x, a.y]
     } else {
-        return [a.layerX, a.layerY]
+		if(a.layerX || a.layerY){
+			return [a.layerX, a.layerY]
+		}else{//兼容手机
+			return [a.touches[0].clientX, a.touches[0].clientY]
+		}
+        
     }
 };
 /*
@@ -106,9 +111,11 @@ QQShuru.HWPanel = function (obj) {
         C = [];
     pointsDeltaXY = [];
     var k = [0, 0];
+	
+	
     //鼠标按下事件
     var l = function (W) {
-        if (v !== W.button) {
+        if ((W.layerX || W.layerY) && v !== W.button) {//pc端要判断鼠标按下
             return
         }
         var Y = B(W);

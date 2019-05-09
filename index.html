@@ -15,7 +15,7 @@
 		   <a class="large orange  button" id="clear">重写</a>
 			<a class="large green  button" id="ok">确定</a>
 		 </div>
-<script type="text/javascript" src="./js/handwritingapi.js?v=0508"></script>
+<script type="text/javascript" src="./js/handwritingapi.js?v=0509"></script>
 <script type="text/javascript">
     function callbackfunc(ret){		
 		var temp = "";
@@ -57,7 +57,7 @@
 		return a+o+b;
 	}
 	QQShuru.Util.Event.addEvent(document.querySelector("#ok"), "click", function(){
-		if(eval(question) == answer){
+		if(eval(question) === parseInt(answer,10)){
 			context.fillStyle = "rgba(255, 0, 0, 0.5)";
 			context.font = "bold 320px '字体','字体','微软雅黑','宋体'"; //设置字体
 			context.fillText("√" ,180 ,400); //设置文本内容
